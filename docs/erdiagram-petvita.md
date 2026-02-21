@@ -98,6 +98,9 @@ erDiagram
         decimal valor_decimal
         boolean valor_boolean
         datetime valor_datetime
+        datetime horario_medicao
+        uuid criado_por FK
+        boolean auditado
     }
 
     ALIMENTACAO {
@@ -125,6 +128,15 @@ erDiagram
         text observacoes
     }
 
+    APLICACAO_FARMACO {
+        uuid id PK
+        uuid prescricao_farmaco_id FK
+        datetime horario_programado
+        datetime horario_real
+        uuid aplicado_por FK
+        boolean auditado
+    }
+
     TUTOR ||--o{ ANIMAL_TUTOR : vinculado
     ANIMAL ||--o{ ANIMAL_TUTOR : possui
     ANIMAL ||--o{ INTERNAMENTO : gera
@@ -133,6 +145,7 @@ erDiagram
     DIA_INTERNAMENTO ||--o{ ALIMENTACAO : possui
     DIA_INTERNAMENTO ||--o{ PRESCRICAO_FARMACO : possui
     FARMACO ||--o{ PRESCRICAO_FARMACO : usado_em
+    PRESCRICAO_FARMACO ||--o{ APLICACAO_FARMACO : possui
     INTERNAMENTO ||--o{ INTERNAMENTO_VETERINARIO : possui
     USUARIO ||--o{ INTERNAMENTO_VETERINARIO : atua_em
     PARAMETRO_CLINICO ||--o{ OPCAO_PARAMETRO : possui
@@ -140,4 +153,6 @@ erDiagram
     REGISTRO_CLINICO ||--o{ VALOR_PARAMETRO : registra
     OPCAO_PARAMETRO ||--o{ VALOR_PARAMETRO : selecionado
     USUARIO ||--o{ REGISTRO_CLINICO : cria
+    USUARIO ||--o{ VALOR_PARAMETRO : cria
+    USUARIO ||--o{ APLICACAO_FARMACO : aplica
 ```
