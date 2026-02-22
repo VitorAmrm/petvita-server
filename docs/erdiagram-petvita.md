@@ -137,6 +137,30 @@ erDiagram
         boolean auditado
     }
 
+    EXAME_ADICIONAL {
+        uuid id PK
+        uuid internamento_id FK
+        string tipo_exame
+        text descricao_solicitacao
+        datetime data_solicitacao
+        datetime data_realizacao
+        string status
+        uuid solicitado_por FK
+        uuid realizado_por FK
+    }
+
+    ARQUIVO_EXAME {
+        uuid id PK
+        uuid exame_adicional_id FK
+        string nome_original
+        string tipo_mime
+        string caminho_armazenamento
+        bigint tamanho_bytes
+        string hash_arquivo
+        datetime data_upload
+        uuid enviado_por FK
+    }
+
     TUTOR ||--o{ ANIMAL_TUTOR : vinculado
     ANIMAL ||--o{ ANIMAL_TUTOR : possui
     ANIMAL ||--o{ INTERNAMENTO : gera
@@ -155,4 +179,9 @@ erDiagram
     USUARIO ||--o{ REGISTRO_CLINICO : cria
     USUARIO ||--o{ VALOR_PARAMETRO : cria
     USUARIO ||--o{ APLICACAO_FARMACO : aplica
+    INTERNAMENTO ||--o{ EXAME_ADICIONAL : possui
+    USUARIO ||--o{ EXAME_ADICIONAL : solicita
+    USUARIO ||--o{ EXAME_ADICIONAL : realiza
+    INTERNAMENTO ||--o{ EXAME_ADICIONAL : possui
+    EXAME_ADICIONAL ||--o{ ARQUIVO_EXAME : possui
 ```

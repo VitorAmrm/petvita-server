@@ -29,10 +29,6 @@ O PDF organiza os dados por dia de internamento, mostrando **últimas medições
 
 ## Fluxos Alternativos
 
-### 4A – Usuário sem permissão
-- Sistema bloqueia acesso  
-- Exibe mensagem “Acesso negado”  
-
 ### 6A – Internamento inexistente
 - Sistema informa que não existem registros para o período selecionado  
 
