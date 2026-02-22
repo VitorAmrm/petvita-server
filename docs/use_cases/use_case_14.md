@@ -3,6 +3,7 @@
 ## Atores
 - Veterinário  
 - Administrador  
+- Estagiário
 
 ## Descrição
 Permite registrar exames complementares vinculados a um internamento ativo, incluindo upload de arquivo digital (PDF) para armazenamento seguro e consulta posterior.

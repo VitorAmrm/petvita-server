@@ -2,6 +2,7 @@
 
 ## Atores
 - Veterinário
+- Estagiário
 
 ## Descrição
 Permite abrir um novo internamento para um animal existente.
@@ -18,7 +19,7 @@ Permite abrir um novo internamento para um animal existente.
 
 ## Fluxos Alternativos
 ### 3A - Animal não cadastrado
-- Sistema solicita cadastro prévio
+- Sistema solicita cadastro no momento e retorna para cadastro do internamento
 
 ## Pós-condições
 - Internamento ativo no sistema
