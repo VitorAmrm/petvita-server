@@ -43,7 +43,7 @@ Fluxo:
 
 ## 3.1 Tecnologias
 
-- Java 21
+- Java 24
 - Micronaut
 - JPA / Hibernate
 - PostgreSQL
@@ -51,6 +51,12 @@ Fluxo:
 - Amazon S3 SDK
 - Bean Validation
 - OpenAPI
+- Hibernate Envers
+- Jeyzer Report
+- OpenTelemetry
+- Build Nativo
+- Jib
+- Micrometer
 
 ## 3.2 Estilo Arquitetural
 
@@ -196,7 +202,6 @@ Regra de negócio crítica permanece no backend.
 
 Possíveis evoluções:
 
-- Multi-clínica (multi-tenant)
 - Dockerização
 - Kubernetes
 - CI/CD
