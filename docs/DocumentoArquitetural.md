@@ -226,3 +226,127 @@ A estrutura garante:
 - Rastreabilidade
 - Evolução controlada
 - Manutenção simplificada
+
+---
+
+# 9. Auditoria e Versionamento de Dados
+
+## 9.1 Objetivo
+
+Garantir rastreabilidade completa das alterações realizadas em entidades clínicas estratégicas do sistema, assegurando:
+
+- Histórico imutável  
+- Identificação do usuário responsável  
+- Registro de data e hora da operação  
+- Preservação do histórico clínico  
+
+A auditoria será implementada exclusivamente através do **Hibernate Envers**.
+
+---
+
+## 9.2 Estratégia Adotada
+
+O sistema utilizará Hibernate Envers para:
+
+- Versionar automaticamente entidades selecionadas  
+- Registrar INSERT, UPDATE e DELETE  
+- Permitir consulta histórica de estados anteriores  
+- Garantir rastreabilidade sem sobrescrita destrutiva  
+
+Não haverá mecanismo paralelo de auditoria.
+
+---
+
+## 9.3 Escopo da Auditoria
+
+A auditoria será aplicada apenas às entidades estratégicas do domínio clínico:
+
+- INTERNAMENTO  
+- DIA_INTERNAMENTO  
+- REGISTRO_CLINICO  
+- VALOR_PARAMETRO  
+- PRESCRICAO_FARMACO  
+- APLICACAO_FARMACO  
+- EXAMES_ADICIONAIS  
+
+Entidades meramente cadastrais (ex: FARMACO, PARAMETRO_CLINICO, USUARIO) não serão versionadas.
+
+---
+
+## 9.4 Estrutura Técnica
+
+Para cada entidade anotada com `@Audited`, o Envers criará automaticamente:
+
+- Tabela `<ENTIDADE>_AUD`  
+- Campo `REV` (identificador da revisão)  
+- Campo `REVTYPE`:  
+  - 0 = INSERT  
+  - 1 = UPDATE  
+  - 2 = DELETE  
+
+---
+
+## 9.5 Registro do Usuário da Revisão
+
+Será implementado um `RevisionListener` customizado para capturar:
+
+- ID do usuário autenticado (via contexto de segurança)  
+- Timestamp da operação  
+
+Será criada uma entidade de revisão personalizada contendo:
+
+- revision_id  
+- timestamp  
+- usuario_id  
+
+Isso garante rastreabilidade de quem realizou a alteração.
+
+---
+
+## 9.6 Exclusões
+
+Mesmo utilizando Envers, o sistema continuará adotando:
+
+- Soft delete para entidades clínicas  
+- Campo de status para encerramento de internamento  
+
+Envers registrará o evento de alteração normalmente.
+
+---
+
+## 9.7 Consulta de Histórico
+
+O backend disponibilizará endpoints administrativos para:
+
+- Consultar histórico de uma entidade específica  
+- Recuperar versões anteriores  
+- Visualizar alterações realizadas  
+
+A visualização será restrita a perfis autorizados.
+
+---
+
+## 9.8 Considerações de Armazenamento
+
+- O volume de dados crescerá proporcionalmente ao número de alterações  
+- Apenas entidades estratégicas serão auditadas  
+- Futuramente poderá ser aplicada política de arquivamento  
+
+---
+
+## 9.9 Segurança
+
+- Registros de auditoria não poderão ser alterados manualmente  
+- Apenas Administrador poderá acessar histórico completo  
+- A auditoria não será exposta publicamente via API  
+
+---
+
+# Conclusão
+
+A utilização do Hibernate Envers apenas em entidades estratégicas garante:
+
+- Controle clínico robusto  
+- Histórico confiável  
+- Arquitetura limpa e previsível  
+- Baixo acoplamento com regras de negócio  
